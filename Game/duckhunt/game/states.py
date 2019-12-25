@@ -4,6 +4,7 @@ import sounds
 from registry import adjpos, adjrect, adjwidth, adjheight
 from gun import Gun
 from duck import Duck
+import math  
 
 DOG_POSITION = adjpos (250, 350)
 DOG_FRAME = adjpos (122, 110)
@@ -190,18 +191,32 @@ class PlayState(BaseState):
         self.dogPosition = DOG_REPORT_POSITION
         self.dogdy = 5
 
+    def calculateDistance(self, duck, click): 
+        x1, y1 = duck
+        x2, y2 = click 
+        dist = math.sqrt((x2 - x1)**2 + (y2 - y1)**2)  
+        return dist  
+
     def execute(self, event):
         if event.type == pygame.MOUSEMOTION:
             self.gun.moveCrossHairs(event.pos)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             hasFired = self.gun.shoot()
+            aliveDucks = filter(lambda duck: not duck.isDead, self.ducks)
+            nearestDuck = sorted(aliveDucks, key=lambda duck: self.calculateDistance(duck.position, event.pos))[0]
+            x1, y1 = nearestDuck.position
+            x2, y2 = event.pos 
             for duck in self.ducks:
-                if hasFired and duck.isShot(event.pos):
+                eventposcopy = nearestDuck.position
+                # if(duck.position == nearestDuck.position and self.calculateDistance(duck.position, event.pos) < 300):
+                #     eventposcopy = duck.position
+                if hasFired and duck.isShot(eventposcopy):
                     self.registry.set('score', self.registry.get('score') + 10)
                     self.hitDucks[self.hitDuckIndex] = True
                     self.hitDuckIndex += 1
                 elif not duck.isDead and self.gun.rounds <= 0:
                      duck.flyOff = True
+
 
     def update(self):
         timer = int(time.time())

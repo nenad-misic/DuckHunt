@@ -157,9 +157,10 @@ def create_model():
     return model
 
 
-image_url = "http://192.168.0.10:8080/photo.jpg"
+image_url = "http://192.168.0.10:8080/shot.jpg"
 model = create_model()
 model.load_weights("../Classifiers/best_weights_cnn.hdf5")
+pyautogui.PAUSE = 0
 app = Flask(__name__, static_url_path='')
 
 @app.route('/')
@@ -168,12 +169,15 @@ def servePage():
 
 @app.route('/shoot')
 def shoot():
+
     resp = requests.get(image_url, stream=True)
+
     resp.raw.decode_content = True
 
     x = np.fromstring(resp.raw.read(), dtype='uint8')
 
     image = cv2.imdecode(x, cv2.IMREAD_UNCHANGED)
+
     grayscale_image = grayscale_loaded_image(image)
     resized_image = resize_image(grayscale_image, BIG_WIDTH, BIG_HEIGHT)
     blurred = blur_image(resized_image)
@@ -183,19 +187,19 @@ def shoot():
     resize_ratio_height = DISPLAY_CROP_HEIGHT / crop_image.shape[0]
     central_resized = (int(central[0] * resize_ratio_width), int(central[1] * resize_ratio_height))
     shooting_rectangle = crop_image_resize[central_resized[1] - 50: central_resized[1] + 50,central_resized[0] - 50 : central_resized[0] + 50]
-    display_gray_image(shooting_rectangle)
 
     prediction = cnn_predict_image(model, shooting_rectangle)
+
 
     screen_width,screen_height = 800,500
     transfer_ratio_width = DISPLAY_CROP_WIDTH / screen_width
     transfer_ratio_height = DISPLAY_CROP_HEIGHT / screen_height
     central_transfered = (int(central[0] * transfer_ratio_width), int(central[1] * transfer_ratio_height))
-    print(central_transfered)
-    pyautogui.moveTo(central_transfered[0]+30, central_transfered[1]+50, duration=0.5)
-    
+
     if prediction == 0:
-        pyautogui.click()
+        pyautogui.click(x=central_transfered[0], y=central_transfered[1])
+    else:
+        pyautogui.moveTo(central_transfered[0], central_transfered[1])
     
 
     return 'bird' if prediction==0 else 'not bird'

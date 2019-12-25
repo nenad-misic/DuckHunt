@@ -10,7 +10,7 @@ class Gun(object):
 
     def render(self):
         surface = self.registry.get('surface')
-        surface.blit(self.mouseImg, self.mousePos)
+        #surface.blit(self.mouseImg, self.mousePos)
 
     def reloadIt(self):
         self.rounds = 3
