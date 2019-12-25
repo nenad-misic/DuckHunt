@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <script src="jquery-3.4.1.min.js"></script>
+        <script src="shoot.js"></script>
+        <style>
+            .stream-container {
+                width:100%;
+                height:100%;
+                text-align: center;
+            }
+
+            .stream{
+                z-index: 50;
+                -webkit-user-select: none;
+                 margin:2.5%;
+            }
+            
+            .crosshair{
+                position:absolute;
+                top:0;
+                left:0;
+                right:0;
+                bottom:0;
+                margin:auto;
+                width: 40px;
+                height: 40px;
+            }
+
+            .crosshair-container {
+                z-index: 100;
+                position:relative;
+                height: 100%;
+                width:100%;
+            }
+
+            .shooter {
+                display:none;
+            }
+          </style>
+    </head>
+    <body style="margin: 0px; background: #0e0e0e;">
+        <div class="stream-container">
+            <img class="stream" src="http://192.168.0.10:8080/video" height="90%">
+        </div>
+    </body>
+    
+    <div class=".crosshair-container">
+        <img class="crosshair" src="crosshair.png">
+    </div>
+
+    <audio class="shooter" src="http://soundbible.com/mp3/Winchester12-RA_The_Sun_God-1722751268.mp3"></audio>
+</html>

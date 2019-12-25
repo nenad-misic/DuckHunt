@@ -127,3 +127,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#Dataset
+Datasets/Dataset-game
+Datasets/Dataset-youtube
+
+#Classifiers
+Classifiers/*.pickle
