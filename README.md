@@ -9,6 +9,9 @@ Projektni zadatak iz predmeta Soft computing, 2019/2020
 ## Asistent:
    Dragan Vidaković
 
+## Prezentacija
+![Duck hunt prezentacija](https://media.giphy.com/media/kEiMIhcbFHcx9b0GsG/giphy.gif)
+
 ## Definicija problema:
 Kreiranje kopije popularne Nintendo igre "Duck Hunt" tako da bude kontrolisana preko mobilnog uređaja povezanog na lokalnu mrežu sa računarom. Kupovinom tradicionalne verzije igre dobijao se i kontroler kojim se ciljalo prema ekranu televizora i tako ubijale ptice. Više o igri se može naći na sledećem [linku](https://en.wikipedia.org/wiki/Duck_Hunt).
 
